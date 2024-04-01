@@ -58,6 +58,8 @@ type Config struct {
 	HttpReadTimeout  time.Duration
 	HttpWriteTimeout time.Duration
 
+	AnyCableDisabled bool
+
 	LogLevel slog.Level
 }
 
@@ -93,6 +95,8 @@ func NewConfig() (*Config, error) {
 		HttpIdleTimeout:  getEnvDuration("HTTP_IDLE_TIMEOUT", defaultHttpIdleTimeout),
 		HttpReadTimeout:  getEnvDuration("HTTP_READ_TIMEOUT", defaultHttpReadTimeout),
 		HttpWriteTimeout: getEnvDuration("HTTP_WRITE_TIMEOUT", defaultHttpWriteTimeout),
+
+		AnyCableDisabled: getEnvBool("DISABLE_ANYCABLE", false),
 
 		LogLevel: logLevel,
 	}, nil
