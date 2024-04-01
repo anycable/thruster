@@ -116,6 +116,7 @@ func TestConfig_override_defaults_with_env_vars(t *testing.T) {
 	usingEnvVar(t, "GZIP_COMPRESSION_ENABLED", "0")
 	usingEnvVar(t, "DEBUG", "1")
 	usingEnvVar(t, "ACME_DIRECTORY", "https://acme-staging-v02.api.letsencrypt.org/directory")
+	usingEnvVar(t, "DISABLE_ANYCABLE", "1")
 
 	c, err := NewConfig()
 	require.NoError(t, err)
@@ -127,6 +128,7 @@ func TestConfig_override_defaults_with_env_vars(t *testing.T) {
 	assert.Equal(t, false, c.GzipCompressionEnabled)
 	assert.Equal(t, slog.LevelDebug, c.LogLevel)
 	assert.Equal(t, "https://acme-staging-v02.api.letsencrypt.org/directory", c.ACMEDirectoryURL)
+	assert.Equal(t, true, c.AnyCableDisabled)
 }
 
 func TestConfig_override_defaults_with_env_vars_using_prefix(t *testing.T) {
