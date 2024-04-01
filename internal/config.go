@@ -63,8 +63,12 @@ type Config struct {
 
 	ForwardHeaders bool
 
-	LogLevel    slog.Level
 	LogRequests bool
+
+	AnyCableDisabled bool
+	AnyCableOptions  string
+
+	LogLevel slog.Level
 }
 
 func NewConfig() (*Config, error) {
@@ -103,6 +107,9 @@ func NewConfig() (*Config, error) {
 
 		LogLevel:    logLevel,
 		LogRequests: getEnvBool("LOG_REQUESTS", defaultLogRequests),
+
+		AnyCableDisabled: getEnvBool("DISABLE_ANYCABLE", false),
+		AnyCableOptions:  getEnvString("ANYCABLE_OPT", ""),
 	}
 
 	config.ForwardHeaders = getEnvBool("FORWARD_HEADERS", !config.HasTLS())
