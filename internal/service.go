@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strings"
 )
 
 type Service struct {
@@ -70,7 +71,12 @@ func (s *Service) setEnvironment() {
 }
 
 func (s *Service) runAnyCable(l *slog.Logger) (*cli.Embedded, error) {
-	c := cli.NewConfig()
+	argsWithProg := append([]string{"anycable-go"}, strings.Fields(s.config.AnyCableOptions)...)
+
+	c, err, _ := cli.NewConfigFromCLI(argsWithProg)
+	if err != nil {
+		return nil, err
+	}
 
 	opts := []cli.Option{
 		cli.WithName("AnyCable"),

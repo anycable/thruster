@@ -59,6 +59,7 @@ type Config struct {
 	HttpWriteTimeout time.Duration
 
 	AnyCableDisabled bool
+	AnyCableOptions  string
 
 	LogLevel slog.Level
 }
@@ -97,6 +98,7 @@ func NewConfig() (*Config, error) {
 		HttpWriteTimeout: getEnvDuration("HTTP_WRITE_TIMEOUT", defaultHttpWriteTimeout),
 
 		AnyCableDisabled: getEnvBool("DISABLE_ANYCABLE", false),
+		AnyCableOptions:  getEnvString("ANYCABLE_OPT", ""),
 
 		LogLevel: logLevel,
 	}, nil
