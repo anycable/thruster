@@ -1,4 +1,35 @@
-# Thruster
+# Thruster (AnyCabled)
+
+> [!IMPORTANT]
+> This is a fork of Basecamp's [thruster](https://github.com/basecamp/thruster) that embeds [AnyCable](https://anycable.io) right into the `thrust` proxy server.
+
+## Installation
+
+To add AnyCable Thruster to your Ruby/Rails project, simply replace the original `thruster` gem with `anycable-thruster`:
+
+```diff
+- gem "thruster"
++ gem "anycable-thruster"
+```
+
+That's it! Everything else stays the same as with a regular Thruster.
+
+## AnyCable configuration
+
+AnyCable is enabled by default and accepts WebSocket requests at the `/cable` path. You can disable AnyCable and use Thruster as is by setting the `DISABLE_ANYCABLE` environment variable to `1` to `true`.
+
+To configure AnyCable server, you can use `ANYCABLE_XXX` env variables as usual or pass command-line options via the `ANYCABLE_OPT` enviroment variable. For example, the following two commands are equivalent:
+
+```sh
+ANYCABLE_DEBUG=true thrust bin/rails s
+
+ANYCABLE_OPT="-debug" thrust bin/rails s
+```
+
+----
+
+> [!NOTE]
+> This is the original Thruster readme without any modifications.
 
 Thruster is an HTTP/2 proxy for simple production-ready deployments of Rails
 applications. It runs alongside the Puma webserver to provide a few additional
