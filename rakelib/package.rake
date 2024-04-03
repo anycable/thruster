@@ -7,7 +7,7 @@ NATIVE_PLATFORMS = {
   "aarch64-linux" => "dist/thrust-linux-arm64",
 }
 
-BASE_GEMSPEC = Bundler.load_gemspec("thruster.gemspec")
+BASE_GEMSPEC = Bundler.load_gemspec("anycable-thruster.gemspec")
 
 gem_path = Gem::PackageTask.new(BASE_GEMSPEC).define
 desc "Build the ruby gem"
