@@ -95,6 +95,7 @@ func (s *Service) runAnyCable(l *slog.Logger) (*cli.Embedded, error) {
 		cli.WithDefaultSubscriber(),
 		cli.WithDefaultBroadcaster(),
 		cli.WithLogger(l),
+		cli.WithTelemetry("variant", "thruster"),
 	}
 
 	runner, err := cli.NewRunner(c, opts)
