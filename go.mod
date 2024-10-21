@@ -5,7 +5,7 @@ go 1.23
 toolchain go1.23.1
 
 require (
-	github.com/anycable/anycable-go v1.5.5
+	github.com/anycable/anycable-go v1.5.6
 	github.com/klauspost/compress v1.17.10
 	github.com/stretchr/testify v1.9.0
 	golang.org/x/crypto v0.28.0
