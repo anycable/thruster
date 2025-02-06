@@ -80,7 +80,7 @@ func NewConfig() (*Config, error) {
 	config := &Config{
 		TargetPort:      getEnvInt("TARGET_PORT", defaultTargetPort),
 		UpstreamCommand: os.Args[1],
-		UpstreamArgs:    os.Args[2:],
+		UpstreamArgs:    append([]string{}, os.Args[2:]...),
 
 		CacheSizeBytes:        getEnvInt("CACHE_SIZE", defaultCacheSize),
 		MaxCacheItemSizeBytes: getEnvInt("MAX_CACHE_ITEM_SIZE", defaultMaxCacheItemSizeBytes),
