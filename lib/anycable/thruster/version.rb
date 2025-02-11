@@ -2,7 +2,7 @@ require_relative "../../thruster/version"
 
 module AnyCable
   module Thruster
-    VERSION = "0.1.11"
+    VERSION = "0.1.12"
 
     # Very basic validation to ensure the versions are in sync
     if ::Thruster::VERSION.split(".").take(2) != VERSION.split(".").take(2)
