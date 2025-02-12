@@ -4,7 +4,7 @@ go 1.23.0
 
 toolchain go1.23.1
 
-replace github.com/anycable/anycable-go => github.com/anycable/anycable v1.6.0-rc.2
+replace github.com/anycable/anycable-go => github.com/anycable/anycable v1.6.0-rc.3
 
 require (
 	github.com/anycable/anycable-go v1.6.0-rc.2
