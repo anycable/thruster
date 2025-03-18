@@ -1,5 +1,9 @@
 # AnyCable changes
 
+## 0.1.14
+
+* Upgraded to AnyCable v1.6.0
+
 ## 0.1.13
 
 * Upgraded to AnyCable v1.6.0.rc.3
