@@ -2,10 +2,10 @@ module github.com/basecamp/thruster
 
 go 1.25.5
 
-replace github.com/anycable/anycable-go => github.com/anycable/anycable v1.6.2
+replace github.com/anycable/anycable-go => github.com/anycable/anycable v1.6.5
 
 require (
-	github.com/anycable/anycable-go v1.6.2
+	github.com/anycable/anycable-go v1.6.5
 	github.com/klauspost/compress v1.18.2
 	github.com/stretchr/testify v1.10.0
 	golang.org/x/crypto v0.46.0
