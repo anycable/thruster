@@ -1,0 +1,102 @@
+name: release
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    env:
+      # check only direct github for anycable dependencies
+      GOPRIVATE: github.com/anycable/*
+      GONOSUMDB: github.com/anycable/*
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [ linux, darwin ]
+        goarch: [ amd64, arm64 ]
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Setup golang
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Get AnyCable version
+        id: anycable
+        run: |
+          set -euo pipefail
+          ver="$(grep -E '^\s*github\.com/anycable/anycable-go\s+v[0-9A-Za-z\.\-\+]+' go.mod | awk '{print $2}')"
+          test -n "$ver"
+          echo "version=$ver" >> "$GITHUB_OUTPUT"
+
+      - name: Replace dependency with Pro version with auth
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          set -euxo pipefail
+          git config --global url."https://x-access-token:${GH_PAT}@github.com/".insteadOf "https://github.com/"
+
+          go mod edit -dropreplace=github.com/anycable/anycable-go || true
+          go mod edit -replace=github.com/anycable/anycable-go=github.com/anycable/anycable-pro-source-releases@${{ steps.anycable.outputs.version }}
+
+          go env GOPRIVATE GONOSUMDB GOPROXY GOSUMDB
+          go mod tidy
+
+      - name: Download and vendor all dependencies
+        run: |
+          set -euxo pipefail
+          go mod vendor
+
+      # for test/debug purpose: will be removed
+      - name: Checks that module shows to Pro
+        run: |
+          set -euxo pipefail
+          go list -m -json github.com/anycable/anycable-go
+
+      - name: Build ${{ matrix.goos }}/${{ matrix.goarch }}
+        env:
+          CGO_ENABLED: 0
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+        run: |
+          mkdir -p dist
+          go build -mod=vendor -trimpath -ldflags "-s -w" \
+            -o "dist/anycable-thruster-${{ matrix.goos }}-${{ matrix.goarch }}" ./cmd/thrust
+          chmod +x "dist/anycable-thruster-${{ matrix.goos }}-${{ matrix.goarch }}"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ matrix.goos }}-${{ matrix.goarch }}
+          path: dist/*
+          if-no-files-found: error
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+    if: ${{ github.event_name == 'release' }}
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: dist-*
+          merge-multiple: true
+          path: dist
+
+      # for test/debug purpose: will be removed
+      - name: Show built artifacts
+        run: |
+          set -euxo pipefail
+          ls -lah dist
+
+      - name: Upload to release (once)
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/anycable-thruster-*
