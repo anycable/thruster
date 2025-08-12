@@ -4,5 +4,5 @@
 
 # Ignore Gem packaging artifacts
 /pkg
-/exe/
+/exe/*
 !/exe/thrust

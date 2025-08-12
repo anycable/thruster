@@ -26,6 +26,40 @@ ANYCABLE_DEBUG=true thrust bin/rails s
 ANYCABLE_OPT="-debug" thrust bin/rails s
 ```
 
+## Using a custom AnyCable binary
+
+AnyCable Thruster can launch an external AnyCable-compatible binary (e.g., **AnyCable Pro**) instead of the one bundled with the gem.
+Set `ANYCABLE_THRUSTER_BIN_PATH` to either a **full path** or a **command name** (looked up in `$PATH`).  
+If the variable is not set, Thruster falls back to the bundled per-platform binary.
+
+### Local usage
+
+If you have `anycable-thruster` available in your `$PATH`:
+
+```sh
+# Thruster will exec the given binary and pass through all CLI args
+ANYCABLE_THRUSTER_BIN_PATH=anycable-thruster thrust bin/rails server
+
+#You may also use an absolute path if you prefer:
+ANYCABLE_THRUSTER_BIN_PATH=/usr/local/bin/anycable-thruster thrust bin/rails server
+```
+
+### Heroku (with the AnyCable Go buildpack)
+
+**Configure the AnyCable Go buildpack to fetch the Thruster binary:**
+- `HEROKU_ANYCABLE_GO_BINARY_NAME=anycable-thruster`
+
+In Procfile:
+
+```
+# resolves via PATH
+web: ANYCABLE_THRUSTER_BIN_PATH=anycable-thruster thrust bin/rails server
+
+# resolve absolute path at runtime
+# web: ANYCABLE_THRUSTER_BIN_PATH=$(which anycable-thruster) thrust bin/rails server
+```
+
+For full buildpack options see the buildpack [README](https://github.com/anycable/heroku-anycable-go).
 ----
 
 > [!NOTE]
