@@ -12,6 +12,8 @@ import (
 type UpstreamProcess struct {
 	Started chan struct{}
 	cmd     *exec.Cmd
+
+	shutdowners []func() error
 }
 
 func NewUpstreamProcess(name string, arg ...string) *UpstreamProcess {
@@ -48,11 +50,22 @@ func (p *UpstreamProcess) Signal(sig os.Signal) error {
 	return p.cmd.Process.Signal(sig)
 }
 
+func (p *UpstreamProcess) OnShutdown(clbk func() error) {
+	p.shutdowners = append(p.shutdowners, clbk)
+}
+
 func (p *UpstreamProcess) handleSignals() {
 	ch := make(chan os.Signal, 1)
 	signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM)
 
 	sig := <-ch
+
+	for _, shutdowner := range p.shutdowners {
+		if err := shutdowner(); err != nil {
+			slog.Error("Error on shutdown", "error", err)
+		}
+	}
+
 	slog.Info("Relaying signal to upstream process", "signal", sig.String())
 	_ = p.Signal(sig)
 }

@@ -1,14 +1,17 @@
 package internal
 
 import (
+	"context"
 	"fmt"
 	"log/slog"
 	"net/http"
 	"net/url"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/anycable/anycable-go/cli"
+	"github.com/anycable/anycable-go/config"
 )
 
 type Service struct {
@@ -37,9 +40,13 @@ func (s *Service) Run() int {
 	}
 
 	handler := NewHandler(handlerOptions)
-	handler = s.maybeHandleAnyCable(handler)
+	handler, anycableShutdown := s.maybeHandleAnyCable(handler)
 	server := NewServer(s.config, handler)
 	upstream := NewUpstreamProcess(s.config.UpstreamCommand, s.config.UpstreamArgs...)
+
+	if anycableShutdown != nil {
+		upstream.OnShutdown(anycableShutdown)
+	}
 
 	if err := server.Start(); err != nil {
 		return 1
@@ -73,24 +80,33 @@ func (s *Service) setEnvironment() {
 	os.Setenv("PORT", fmt.Sprintf("%d", s.config.TargetPort))
 }
 
-func (s *Service) maybeHandleAnyCable(handler http.Handler) http.Handler {
+func (s *Service) maybeHandleAnyCable(handler http.Handler) (http.Handler, func() error) {
 	if !s.config.AnyCableDisabled {
-		anycable, err := s.runAnyCable(slog.Default())
+		anycable, anyconf, err := s.runAnyCable(slog.Default())
 		if err != nil {
 			panic(err)
 		}
 		handler = NewAnyCableHandler(anycable, handler)
+
+		gracefulShutdown := func() error {
+			ctx, cancel := context.WithTimeout(context.Background(), time.Duration(anyconf.App.ShutdownTimeout)*time.Second)
+			defer cancel()
+
+			return anycable.Shutdown(ctx)
+		}
+
+		return handler, gracefulShutdown
 	}
 
-	return handler
+	return handler, nil
 }
 
-func (s *Service) runAnyCable(l *slog.Logger) (*cli.Embedded, error) {
+func (s *Service) runAnyCable(l *slog.Logger) (*cli.Embedded, *config.Config, error) {
 	argsWithProg := append([]string{"anycable-go"}, strings.Fields(s.config.AnyCableOptions)...)
 
 	c, err, _ := cli.NewConfigFromCLI(argsWithProg)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	opts := []cli.Option{
@@ -106,10 +122,10 @@ func (s *Service) runAnyCable(l *slog.Logger) (*cli.Embedded, error) {
 	runner, err := cli.NewRunner(c, opts)
 
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	anycable, err := runner.Embed()
 
-	return anycable, err
+	return anycable, c, err
 }
