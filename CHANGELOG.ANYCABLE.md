@@ -1,5 +1,15 @@
 # AnyCable changes
 
+## 0.1.20
+
+* Upgraded to AnyCable v1.6.7
+
+## 0.1.19
+
+* Upgraded to AnyCable v1.6.6
+
+* Add AnyCable graceful shutdown
+
 ## 0.1.18
 
 * Upgraded to AnyCable v1.6.5
