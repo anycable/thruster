@@ -9,12 +9,12 @@ import (
 func TestAnyCableHandler_ServeHTTP(t *testing.T) {
 	websocketHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("WebSocket handler response"))
+		w.Write([]byte("WebSocket handler response")) // nolint:errcheck
 	})
 
 	nextHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("Next handler response"))
+		w.Write([]byte("Next handler response")) // nolint:errcheck
 	})
 
 	handler := &AnyCableHandler{
