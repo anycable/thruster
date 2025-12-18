@@ -6,8 +6,8 @@ github.com/FZambia/sentinel v1.1.1 h1:0ovTimlR7Ldm+wR15GgO+8C2dt7kkn+tm3PQS+Qk3E
 github.com/FZambia/sentinel v1.1.1/go.mod h1:ytL1Am/RLlAoAXG6Kj5LNuw/TRRQrv2rt2FT26vP5gI=
 github.com/antithesishq/antithesis-sdk-go v0.5.0 h1:cudCFF83pDDANcXFzkQPUHHedfnnIbUO3JMr9fqwFJs=
 github.com/antithesishq/antithesis-sdk-go v0.5.0/go.mod h1:IUpT2DPAKh6i/YhSbt6Gl3v2yvUZjmKncl7U91fup7E=
-github.com/anycable/anycable v1.6.7 h1:896eOLOt4f45OsxBygOfqDhENwWI+jx3L+wmKina5Ek=
-github.com/anycable/anycable v1.6.7/go.mod h1:mlAqncs04A1s4EJVgirxrgeadgxVL/3R2fYP9UzlJ2U=
+github.com/anycable/anycable v1.6.8 h1:IrOIn95hSUgR2br17Xm33U02amVZw5e9ROgKP5xc6yE=
+github.com/anycable/anycable v1.6.8/go.mod h1:WJw2qRJbBlbeVvspT93ampJnYY/telLSeIzfOZPrqTw=
 github.com/bufbuild/protocompile v0.14.1 h1:iA73zAf/fyljNjQKwYzUHD6AD4R8KMasmwa/FBatYVw=
 github.com/bufbuild/protocompile v0.14.1/go.mod h1:ppVdAIhbr2H8asPk6k4pY7t9zB1OU5DoEw9xY/FUi1c=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
