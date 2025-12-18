@@ -1,5 +1,9 @@
 # AnyCable changes
 
+## 0.1.21
+
+* Upgraded to AnyCable v1.6.8
+
 ## 0.1.20
 
 * Upgraded to AnyCable v1.6.7
