@@ -2,10 +2,10 @@ module github.com/basecamp/thruster
 
 go 1.26.1
 
-replace github.com/anycable/anycable-go => github.com/anycable/anycable v1.6.8
+replace github.com/anycable/anycable-go => github.com/anycable/anycable v1.6.9
 
 require (
-	github.com/anycable/anycable-go v1.6.8
+	github.com/anycable/anycable-go v1.6.9
 	github.com/klauspost/compress v1.18.2
 	github.com/stretchr/testify v1.11.1
 	golang.org/x/crypto v0.46.0
@@ -14,7 +14,6 @@ require (
 
 require (
 	github.com/BurntSushi/toml v1.5.0 // indirect
-	github.com/FZambia/sentinel v1.1.1 // indirect
 	github.com/antithesishq/antithesis-sdk-go v0.5.0 // indirect
 	github.com/bufbuild/protocompile v0.14.1 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.7 // indirect
@@ -23,7 +22,6 @@ require (
 	github.com/go-chi/chi/v5 v5.2.3 // indirect
 	github.com/golang-jwt/jwt/v5 v5.3.0 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect
-	github.com/gomodule/redigo v1.9.3 // indirect
 	github.com/google/go-tpm v0.9.6 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
