@@ -1,0 +1,40 @@
+name: Release OSS
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ruby
+
+      - name: Build gems
+        run: |
+          gem install rake
+          rake clobber
+          rake package
+
+      - name: Show built gems
+        run: ls -lah pkg
+
+      - name: Configure RubyGems Credentials
+        uses: rubygems/configure-rubygems-credentials@main
+
+      - name: Push gems
+        run:
+          |
+            for g in pkg/*.gem ; do gem push $g ; done
