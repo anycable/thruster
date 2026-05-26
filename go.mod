@@ -1,15 +1,11 @@
 module github.com/basecamp/thruster
 
-<<<<<<< HEAD
 go 1.26.4
-=======
-go 1.26.2
->>>>>>> ce90da3 (Upgrade to AnyCable 1.6.13)
 
-replace github.com/anycable/anycable-go => github.com/anycable/anycable v1.6.13
+replace github.com/anycable/anycable-go => github.com/anycable/anycable v1.6.14
 
 require (
-	github.com/anycable/anycable-go v1.6.13
+	github.com/anycable/anycable-go v1.6.14
 	github.com/klauspost/compress v1.18.6
 	github.com/stretchr/testify v1.11.1
 	golang.org/x/crypto v0.53.0
@@ -40,13 +36,13 @@ require (
 	github.com/minio/highwayhash v1.0.4 // indirect
 	github.com/mitchellh/go-mruby v0.0.0-20200315023956-207cedc21542 // indirect
 	github.com/nats-io/jwt/v2 v2.8.1 // indirect
-	github.com/nats-io/nats-server/v2 v2.12.7 // indirect
+	github.com/nats-io/nats-server/v2 v2.14.0 // indirect
 	github.com/nats-io/nats.go v1.51.0 // indirect
 	github.com/nats-io/nkeys v0.4.15 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/posthog/posthog-go v1.12.1 // indirect
-	github.com/redis/rueidis v1.0.74 // indirect
+	github.com/posthog/posthog-go v1.12.5 // indirect
+	github.com/redis/rueidis v1.0.75 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/smira/go-statsd v1.3.4 // indirect
 	github.com/sony/gobreaker v1.0.0 // indirect
