@@ -66,7 +66,7 @@ jobs:
           GOARCH: ${{ matrix.goarch }}
         run: |
           mkdir -p dist
-          go build -mod=vendor -trimpath -ldflags "-s -w" \
+          go build -mod=vendor -trimpath -ldflags "-s -w -X github.com/anycable/anycable-go/telemetry.auth=$(echo "$ANYCABLE_TELEMETRY_TOKEN") " \
             -o "dist/anycable-thruster-${{ matrix.goos }}-${{ matrix.goarch }}" ./cmd/thrust
           chmod +x "dist/anycable-thruster-${{ matrix.goos }}-${{ matrix.goarch }}"
 

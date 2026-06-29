@@ -9,7 +9,9 @@ build:
 dist:
 	@for platform in $(PLATFORMS); do \
 		for arch in $(ARCHITECTURES); do \
-			GOOS=$$platform GOARCH=$$arch CGO_ENABLED=0 go build -trimpath -o dist/thrust-$$platform-$$arch ./cmd/...; \
+			GOOS=$$platform GOARCH=$$arch CGO_ENABLED=0 go build \
+			-ldflags "-s -w -X github.com/anycable/anycable-go/telemetry.auth=$$ANYCABLE_TELEMETRY_TOKEN" \
+			-trimpath -o dist/thrust-$$platform-$$arch ./cmd/...; \
 		done \
 	done
 
