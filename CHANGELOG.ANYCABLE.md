@@ -1,5 +1,9 @@
 # AnyCable changes
 
+## 0.1.28
+
+* Upgraded to AnyCable v1.6.15 and Thruster 0.1.22
+
 ## 0.1.27
 
 * Upgraded to AnyCable v1.6.14
